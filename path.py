@@ -47,20 +47,6 @@ class MainDiv(app.MainDiv):
 
     def onDown(self, event):
 
-        '''
-        if self.clickSave is None:
-            self.clickSave = event.node.id
-        else:
-            print(self.clickSave)
-            print(event.node.id)
-
-            test = avg.LineNode(color="ff7777", strokewidth=1, pos1=nodes[event.node.id]['pos'], pos2=nodes[self.clickSave]['pos'], parent=self)
-
-            nodes[event.node.id]['linked'].append(self.clickSave)
-            nodes[self.clickSave]['linked'].append(event.node.id)
-            self.clickSave = None
-        '''
-
         if not nodes[event.node.id]['clicked']:
             event.node.fillcolor = 'FFFFFF'
             nodes[event.node.id]['clicked'] = True
@@ -113,25 +99,9 @@ class MainDiv(app.MainDiv):
                     if len(new_key) == key_length:
                         new_dict[new_key] = new_path
 
-                    print(chosen_set, new_path)
                     if chosen_set.issubset(reduceCompundSet(new_path)) and len(set(Kalpha)& set(Komega)) > 0:
-                        print('INTERSECTION', set(Kalpha)& set(Komega))
                         stored.append(new_path)
 
-
-            """
-            min_key, min_path = None, None
-            for key, path in new_dict.iteritems():
-                if min_path is None:
-
-                    print('N_'+str(key_length), len(path))
-                    min_key, min_path = key, path
-                if len(min_path) > len(path):
-                    print('!_'+str(key_length), len(path))
-                    min_key, min_path = key, path
-
-            return {min_key: min_path}, key_length
-            """
 
             return new_dict, key_length, stored
 
@@ -168,19 +138,6 @@ class MainDiv(app.MainDiv):
 
                 node_sets[frozen_set] = min_path
 
-            '''
-            min_path = node_sets[0]
-            for path in node_sets:
-
-                if len(path) < len(min_path):
-                    min_path = path
-
-            print(min_path)
-            for line in min_path:
-
-                lines[line]['store'].color = 'ffffff'
-                lines[line]['store'].strokewidth = 3
-            '''
             key_length = 2
             target_key_length = len(self.chosenNodes)
             new_node_sets = {key: value for key, value in node_sets.iteritems()}
@@ -190,18 +147,7 @@ class MainDiv(app.MainDiv):
                 new_node_sets, key_length, stored_list = pathCombine(node_sets, new_node_sets, key_length, self.chosenNodes, stored_list)
 
             min_path = None
-            print(stored_list)
-            """
-            for key, path in new_node_sets.iteritems():
-                print('aaaa', key, path)
-                if min_path is None:
-                    print('N_'+str(key_length), len(path))
-                    min_path = path
-                else:
-                    if len(min_path) > len(path):
-                        print('!!!_'+str(key_length), len(path))
-                        min_path = path
-            """
+
             for path in stored_list:
 
                 if min_path is None:
@@ -222,12 +168,4 @@ class MainDiv(app.MainDiv):
                 lines[key]['store'].color = 'ff7777'
                 lines[key]['store'].strokewidth = 1
 
-    '''
-    def printThis(self, event):
-        n = {}
-        for key, value in nodes.iteritems():
-            n[key] = {'pos': value['pos'], 'linked': list(set(value['linked']))}
-
-        print(n)
-    '''
 app.App().run(MainDiv(), app_resolution='500x540')
