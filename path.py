@@ -5,11 +5,28 @@ __author__ = 'Nycidian'
 import sys
 from libavg import app, avg
 from tree import nodes
+import json
+from pprint import pprint
 
 lines = {}
 sys.setrecursionlimit(15000)
 
+with open('json/tree.json') as data_file:
+    tree = json.load(data_file)
+scale = .1
+
+
 class MainDiv(app.MainDiv):
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+
+        """
+        self.min_x = tree['min_x']
+        self.min_y = tree['min_y']
+        self.max_x = tree['max_x']
+        self.max_y = tree['max_y']
+        """
 
     def onInit(self):
 
